@@ -63,6 +63,12 @@ AGENTS.md
 *.a
 *.so
 
+# Model-tooling outputs
+exported/
+smolvlm_out/
+checkpoints/
+vlm_eval/images/
+
 # Documentation build files
 *.aux
 *.toc

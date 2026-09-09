@@ -1,0 +1,40 @@
+name: Python tooling
+
+on:
+  pull_request:
+    paths:
+      - pyproject.toml
+      - tools/**
+      - .github/workflows/tools.yml
+  push:
+    branches: [main, dev]
+    paths:
+      - pyproject.toml
+      - tools/**
+      - .github/workflows/tools.yml
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - name: Install lightweight test dependencies
+      run: python -m pip install numpy ruff==0.16.3
+    - name: Lint tooling
+      run: |
+        ruff check \
+          tools/bench.py tools/bitnet_full.py tools/convert_bitnet_onnx.py \
+          tools/convert_smolvlm.py tools/eval.py tools/eval_vlm.py \
+          tools/export_ternary.py tools/quant_search.py \
+          tools/smoke_test_vlm.py tools/train_bitnet.py tools/hardware_semantics.py tools/tests
+    - name: Run unit tests
+      run: python -m unittest discover -s tools/tests -v
+    - name: Exercise synthetic converters
+      run: |
+        python tools/export_ternary.py --synthetic --output /tmp/ternary-export
+        python tools/convert_bitnet_onnx.py --synthetic --rows 2 --cols 4 \
+          --output-dir /tmp/ternary-onnx
