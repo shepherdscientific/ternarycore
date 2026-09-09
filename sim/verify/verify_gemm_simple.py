@@ -90,3 +90,4 @@ else:
     print(f"--- {errors} error(s) ---")
 
 print("\n--- Verification complete ---")
+raise SystemExit(errors)

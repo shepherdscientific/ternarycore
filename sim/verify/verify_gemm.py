@@ -74,3 +74,6 @@ for trial in range(10):
 print(f"\n--- {errors} fixed-test error(s) ---")
 if errors == 0:
     print("ALL TESTS PASSED")
+else:
+    print("FAILURES DETECTED — check test vector definitions")
+raise SystemExit(errors)
