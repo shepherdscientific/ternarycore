@@ -13,10 +13,10 @@ def ternary_gemm_ref(A: np.ndarray, W_enc: np.ndarray) -> np.ndarray:
 
     A      — (ROWS, DEPTH) int8 activation matrix
     W_enc  — (DEPTH, COLS) ternary weight encoding matrix
-             values: 0=zero, 1=+1, 2=-1
+             values: 0=zero, 1=+1, 2/3=-1 (RTL-compatible)
     Returns C — (ROWS, COLS) int32 output matrix
     """
-    W = np.where(W_enc == 1, 1, np.where(W_enc == 2, -1, 0)).astype(np.int32)
+    W = np.where(W_enc == 0, 0, np.where(W_enc == 1, 1, -1)).astype(np.int32)
     return A.astype(np.int32) @ W
 
 
@@ -59,6 +59,20 @@ for r in range(4):
 print(f"\n  Computed matrix C:\n{C}\n")
 print(f"  Expected matrix C:\n{C_expected}\n")
 print(f"  Match: {np.array_equal(C, C_expected)}")
+
+# ── Reserved weight encoding regression ─────────────────────────────────────
+print("\n--- Reserved weight encoding 11 ---")
+A_reserved = np.array([[127]], dtype=np.int8)
+W_reserved = np.array([[3]], dtype=np.int32)
+C_reserved = ternary_gemm_ref(A_reserved, W_reserved)
+reserved_expected = np.array([[-127]], dtype=np.int32)
+reserved_status = "PASS" if np.array_equal(C_reserved, reserved_expected) else "FAIL"
+print(
+    f"  {reserved_status}: encoding 11 -> {C_reserved[0, 0]} "
+    f"(expected {reserved_expected[0, 0]})"
+)
+if not np.array_equal(C_reserved, reserved_expected):
+    errors += 1
 
 # ── Random GEMMs ─────────────────────────────────────────────────────────────
 print("\n--- Random 4×4 GEMMs (10 trials, seed=42) ---")
