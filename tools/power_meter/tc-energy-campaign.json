@@ -1,0 +1,36 @@
+{
+  "idle": {
+    "seconds": 75.116,
+    "joules": 127.649,
+    "watts_avg": 1.6994,
+    "w_inst_start": 1.695,
+    "w_inst_end": 1.702
+  },
+  "accel_cpu_fed": {
+    "seconds": 59.723,
+    "joules": 102.559,
+    "watts_avg": 1.7172,
+    "w_inst_start": 1.712,
+    "w_inst_end": 1.737,
+    "passes": 650,
+    "delta_w_vs_idle": 0.0178
+  },
+  "sw_soft_cpu": {
+    "seconds": 211.421,
+    "joules": 367.786,
+    "watts_avg": 1.7396,
+    "w_inst_start": 1.734,
+    "w_inst_end": 1.706,
+    "passes": 650,
+    "delta_w_vs_idle": 0.0402
+  },
+  "stream_tier2": {
+    "seconds": 67.979,
+    "joules": 122.563,
+    "watts_avg": 1.803,
+    "w_inst_start": 1.803,
+    "w_inst_end": 1.705,
+    "passes": 400000,
+    "delta_w_vs_idle": 0.1036
+  }
+}
