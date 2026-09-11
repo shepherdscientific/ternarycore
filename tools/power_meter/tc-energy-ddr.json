@@ -1,0 +1,25 @@
+{
+  "config": "full inference SoC (arty_ddr): MicroBlaze + ternary array + DDR3 MIG controller + Ethernet PHY, all active",
+  "bitstream": "arty_ddr_wrapper.bit with ddr_host.elf baked in via updatemem (proc arty_ddr_i/microblaze_0)",
+  "meter": "INA226 high-side shunt on the 12 V feed, ESP32-integrated, GET /power brackets at firmware MARK lines",
+  "date": "2026-09-11",
+  "note": "Deployed counterpart to the Tier-2 datapath-isolation campaign in tc-energy-campaign.json. Same 400000-pass SRUN streamed-GEMM workload and same 256 KB BRAM weight window; the difference is the DDR3-refresh + Ethernet-PHY standing draw (3.40 W vs 1.70 W). CPU-fed accel/sw windows omitted: the ddr_host RUN self-test needs the full 110 MB DDR-paged weight set, not just the BRAM window.",
+  "idle": {
+    "seconds": 75.116,
+    "joules": 255.5,
+    "watts_avg": 3.4040,
+    "w_inst_start": 3.401,
+    "w_inst_end": 3.402
+  },
+  "stream": {
+    "seconds": 83.559,
+    "joules": 294.972,
+    "watts_avg": 3.5301,
+    "passes": 400000,
+    "per_pass_us": 208.898,
+    "per_pass_uJ": 737.431,
+    "delta_w_vs_idle": 0.1261,
+    "w_inst_start": 3.527,
+    "w_inst_end": 3.412
+  }
+}
