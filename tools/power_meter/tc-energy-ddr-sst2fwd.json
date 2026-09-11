@@ -1,0 +1,17 @@
+{
+  "window": "sst2_fwd_gemm_ddr_fullsoc",
+  "config": "full inference SoC (arty_ddr: DDR3 controller + Ethernet PHY active)",
+  "date": "2026-09-11",
+  "model": "d4-student-sst2-r2 (distilled 28-block ternary student, SST2 classification)",
+  "seconds": 87.754,
+  "joules": 310.377,
+  "watts_avg": 3.5369,
+  "passes": 420000,
+  "passes_per_forward": 420,
+  "forward_passes": 1000,
+  "macs_per_forward": 440401920,
+  "ms_per_forward": 87.754,
+  "mJ_per_forward": 310.377,
+  "inferences_per_second": 11.395,
+  "note": "Deployed whole-board energy for the GEMM (weight-layer) portion of one SST2 forward pass, averaged over 1000 inferences, meter-bracketed. One forward pass = 196 weight-layer projections = 440.4M MACs = 420 streamed 256KB pages (1,048,576 MACs each). Attention-score, softmax, normalization, embeddings and the classifier head are activation-domain and outside the accelerator's scope (see paper 7.4), so this is the accelerator's contribution to an inference, not total system energy. Streams the resident representative-sparsity (~0.31 zero_frac) weight window PASSES times; per-page streaming energy is weight-independent to first order. Reconciles with the per-GEMM figure: 420 x 737uJ = 309.7mJ (tc-energy-ddr.json)."
+}
